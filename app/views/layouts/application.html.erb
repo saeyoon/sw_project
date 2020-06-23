@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<html>
+  <head>
+    <title>News Portal</title>
+    <%= csrf_meta_tags %>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+	  <nav class="blue darken-3">
+		<div class="container nav-wrapper blue darken-3">
+			<a href="/">
+				<span id="header-large" style="font-weight:500;font-size:2.0rem;">News</span>
+			</a>
+			<ul id="nav-mobile" class="hide-on-med-and-down right">
+				<% if user_signed_in? %>
+					<li class="menu-item menu-item-type-post_type">
+						<%= current_user.name %>님
+					</li>
+					<li class="menu-item menu-item-type-post_type">
+						<%= link_to '로그아웃', destroy_user_session_path, method: 'delete'%>
+					</li>
+					<li class="menu-item menu-item-type-post_type">
+					    <a href="/posts/new">글 작성</a>
+					</li>
+					<li class="menu-item menu-item-type-post_type">
+						<a href="/posts/mypage">My page</a>
+					</li>
+				<% else %>
+					<li class="menu-item menu-item-type-post_type">
+					  	<a href="/users/sign_up">회원가입</a>
+					</li>
+					<li class="menu-item menu-item-type-post_type">
+					  	<a href="/users/sign_in">로그인</a>
+					</li>
+				<% end %>
+			</ul>	
+		</div>
+	  </nav>
+	  <ul class="sidenav" id="mobile-demo">
+			<li><a href="/posts">news</a></li>
+			<li><a href="#">Sign in</a></li>
+			<li><a href="#">Sign up</a></li>
+			<li><a href="mobile.html">Mobile</a></li>
+	  </ul>
+    <%= yield %>
+  </body>
+</html>

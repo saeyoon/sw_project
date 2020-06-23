@@ -1,0 +1,43 @@
+<div class="container" style="width: 700px;">
+	<hr width = "100%">
+	<div class="section" align="center">
+		<h4>
+			<p style="font-weight:normal;"><%=@post.title%></p>
+		</h4>
+	</div>
+	<div class="divider"></div>
+	<div class="section" align="center">
+		<img src="<%=@post.image.url %>" width=500 height=300>
+	</div>
+	<div class="divider"></div>
+	<div class="section" style>
+		<p class="pre-line"><%=@post.content%></p>
+	</div>
+	<div class="divider"></div>
+	<% if user_signed_in? %>
+	  <% if @post.comments.present? %>
+		<ul class="collection">
+		<% @post.comments.each do |comment| %>
+			<li class="collection-item">
+				<span class="title"><%= comment.user.name %></span>
+				<p style="font-weight:200; font-size: 0.7em; color: gray"><%= comment.created_at %></p>
+				<p class="pre-line">
+					<%=comment.content %>
+				</p>
+				<% if comment.user.id == current_user.id %>
+				  <div class><%= link_to "삭제", post_comment_path(@post, comment), method: "delete" %></div>
+				<% end %>
+			</li>
+		<% end %>
+		</ul>
+	  <% end %>
+	<% end %>
+	<%= form_tag post_comments_path(@post) do %>
+		<div class="input-field">
+			<%= text_area_tag :content, nil, class:"materialize-textarea", placeholder: "댓글을 작성해주세요", required: true %>
+		</div>
+		<div class="input-field">
+			<%= button_tag "댓글 쓰기", class: "btn" %>
+		</div>
+	<% end %>
+</div>
